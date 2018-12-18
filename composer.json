@@ -1,0 +1,14 @@
+{
+  "name": "varunsridharan/wp-all-import-rapid-addon",
+  "authors": [
+    {
+      "name": "Varun",
+      "email": "varunsridharan23@gmail.com"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "rapid-addon.php"
+    ]
+  }
+}
