@@ -7,4 +7,4 @@ php: 7.1
     
 script:
     - phpenv config-rm xdebug.ini || return 0
-- php update.php
+    - php update.php
