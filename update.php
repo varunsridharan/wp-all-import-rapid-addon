@@ -1,6 +1,6 @@
 <?php
 $content = file_get_contents( 'https://raw.githubusercontent.com/soflyy/wp-all-import-rapid-addon/master/rapid-addon.php' );
-file_put_contents( 'rapid-addon.php', $content );
+file_put_contents( 'src/rapid-addon.php', $content );
 
 date_default_timezone_set( 'UTC' );
 $output       = shell_exec( 'git log -1' );
