@@ -6,9 +6,9 @@
       "email": "varunsridharan23@gmail.com"
     }
   ],
-  "autoload": {
-    "files": [
-      "rapid-addon.php"
-    ]
-  }
+  "autoload"    : {
+	"psr-4" : {
+	  "\\" : "./src"
+	}
+  },
 }
