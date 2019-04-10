@@ -1,7 +1,7 @@
 <?php
 $content = file_get_contents( 'https://raw.githubusercontent.com/soflyy/wp-all-import-rapid-addon/master/rapid-addon.php' );
 @mkdir(__DIR__.'/src/');
-unlink(__DIR__.'/src/RapidAddon.php');
+@unlink(__DIR__.'/src/RapidAddon.php');
 file_put_contents(__DIR__. '/src/RapidAddon.php', $content );
 
 date_default_timezone_set( 'UTC' );
