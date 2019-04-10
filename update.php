@@ -8,6 +8,7 @@ date_default_timezone_set( 'UTC' );
 $output       = shell_exec( 'git log -1' );
 $build_number = getenv( 'TRAVIS_BUILD_NUMBER' );
 $gh_token     = getenv( 'GH_TOKEN' );
+$microtime = time();
 
 echo shell_exec( "git checkout -f master
 git config --global user.email \"travis@travis-ci.org\"
@@ -15,4 +16,7 @@ git config --global user.name \"Travis CI\"
 git add -A
 git commit -m \"Travis build: $build_number [skip ci]\"
 git remote set-url origin https://$gh_token@github.com/vsp-libs/wp-all-import-rapid-addon.git > /dev/null 2>&1
-git push origin master -f" );
+git push origin master -f
+git tag -a $microtime -m 'Released V $microtime'
+git push --tags
+" );
