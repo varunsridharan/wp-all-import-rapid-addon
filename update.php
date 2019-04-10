@@ -8,7 +8,7 @@ date_default_timezone_set( 'UTC' );
 $output       = shell_exec( 'git log -1' );
 $build_number = getenv( 'TRAVIS_BUILD_NUMBER' );
 $gh_token     = getenv( 'GH_TOKEN' );
-$microtime = time();
+$microtime = date( 'dmyhis' );
 
 echo shell_exec( "git checkout -f master
 git config --global user.email \"travis@travis-ci.org\"
