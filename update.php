@@ -18,5 +18,4 @@ git commit -m \"Travis build: $build_number [skip ci]\"
 git remote set-url origin https://$gh_token@github.com/vsp-libs/wp-all-import-rapid-addon.git > /dev/null 2>&1
 git push origin master -f
 git tag -a $microtime -m 'Released V $microtime'
-git push --tags
-" );
+git push --tags" );
