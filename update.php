@@ -9,7 +9,7 @@ $output       = shell_exec( 'git log -1' );
 $build_number = getenv( 'TRAVIS_BUILD_NUMBER' );
 $gh_token     = getenv( 'GH_TOKEN' );
 $microtime = date( 'dmyhis' );
-
+$build_number_2 = $build_number.".".$build_number;
 echo shell_exec( "git checkout -f master
 git config --global user.email \"travis@travis-ci.org\"
 git config --global user.name \"Travis CI\"
@@ -17,5 +17,5 @@ git add -A
 git commit -m \"Travis build: $build_number [skip ci]\"
 git remote set-url origin https://$gh_token@github.com/vsp-libs/wp-all-import-rapid-addon.git > /dev/null 2>&1
 git push origin master -f
-git tag -a $build_number.'.'.$build_number -m 'Released V $build_number.'.'.$build_number'
+git tag -a \"$build_number_2\" -m 'Released V  \"$build_number_2\" '
 git push --tags" );
