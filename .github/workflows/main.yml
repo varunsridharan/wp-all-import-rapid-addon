@@ -22,7 +22,7 @@ jobs:
         run : |
           git config --global user.email "githubactionbot@gmail.com"
           git config --global user.name "Github Action Bot"
-          echo git status --porcelain
+          echo $(git status --porcelain)
           if [ -z "$(git status --porcelain)" ]; then 
           git add -A
           git commit -m "Github Action : $GITHUB_RUN_ID"
