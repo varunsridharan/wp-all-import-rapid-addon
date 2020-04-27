@@ -23,7 +23,9 @@ jobs:
           git config --global user.email "githubactionbot@gmail.com"
           git config --global user.name "Github Action Bot"
           git add -A 
-          git commit -m "Updated By Github Action : $GITHUB_RUN_ID"
+          git commit -m "Github Action : $GITHUB_RUN_ID"
           git push "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:master
+          git tag -a $GITHUB_RUN_ID -m "Released Version : $GITHUB_RUN_ID"
+          git push --tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
