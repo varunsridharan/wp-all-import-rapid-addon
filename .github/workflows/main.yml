@@ -25,7 +25,7 @@ jobs:
           if [[ "$(git status --porcelain)" != "" ]]; then
               git add -A
               git commit -m "Github Action : $GITHUB_RUN_ID"
-              git push "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:master
+              git remote set-url origin "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
               git tag -a $GITHUB_RUN_ID -m "Released Version : $GITHUB_RUN_ID"
               git push --tags
           fi
