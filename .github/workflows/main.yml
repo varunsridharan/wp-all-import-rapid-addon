@@ -1,0 +1,29 @@
+name: Script_Downloader
+on:
+  push:
+    branches: 
+      - master
+
+  schedule:
+  - cron:  '0 * * * *'
+
+jobs:
+  Downloader:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetching Local Repo
+      - uses: actions/checkout@v1
+      - name: Downloading Latest Source
+        run: |
+          git clone https://github.com/soflyy/wp-all-import-rapid-addon wpallimport
+          cp wpallimport/rapid-addon.php ./src/
+          rm -rf wpallimport/
+      - name: Updating Github
+        run : |
+          git config --global user.email "githubactionbot@gmail.com"
+          git config --global user.name "Github Action Bot"
+          git add -A 
+          git commit -m "Updated By Github Action : $GITHUB_RUN_ID"
+          git push "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
