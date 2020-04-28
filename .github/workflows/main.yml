@@ -5,14 +5,14 @@ on:
       - master
 
   schedule:
-  - cron:  '0 */2 * * *'
+  - cron:  '0/15 * * * *'
 
 jobs:
   Downloader:
     runs-on: ubuntu-latest
     steps:
       - name: Fetching Local Repo
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Downloading Latest Source
         run: |
           git clone https://github.com/soflyy/wp-all-import-rapid-addon wpallimport
