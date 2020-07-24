@@ -6,9 +6,9 @@
       "email": "varunsridharan23@gmail.com"
     }
   ],
-  "autoload"    : {
+    "autoload"    : {
 	"psr-4" : {
-	  "\\" : "./src"
+	  "Varunsridharan\\WordPress\\" : "./src"
 	}
   }
 }
