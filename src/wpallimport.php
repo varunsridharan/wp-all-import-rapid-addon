@@ -72,6 +72,18 @@ HTML;
 		}
 
 		/**
+		 * Creates Customized Name for wpo field with its parent.
+		 *
+		 * @param $field
+		 * @param $parent
+		 *
+		 * @return string
+		 */
+		private function wpo_get_field_name( $field, $parent ) {
+			return ( ! wponion_is_unarrayed( $field ) ) ? $parent . wponion_field_id( $field ) : $parent;
+		}
+
+		/**
 		 * Adds Each And Every Field To WPAllImport And Changes The Slug.
 		 *
 		 * @param        $fields
@@ -83,19 +95,11 @@ HTML;
 			$parent = ( ! empty( $parent ) ) ? rtrim( $parent, '_' ) . '_' : '';
 
 			if ( isset( $fields['id'] ) && ! isset( $fields['fields'] ) ) {
-				$fields['id']        = $parent . $fields['id'];
+				$fields['id']        = $this->wpo_get_field_name( $fields, $parent );
 				$fields['part_name'] = $fields['id'];
 				$this->add_field( $fields['id'], $fields['title'], $fields['type'] );
-			} elseif ( isset( $fields['id'] ) ) {
-				if ( isset( $fields['fields'] ) ) {
-					$this->fix_wpo_field_names( $fields['fields'], $parent . $fields['id'] );
-				}
 			} elseif ( isset( $fields['fields'] ) ) {
-				foreach ( $fields['fields'] as $id => $_field ) {
-					if ( isset( $_field['fields'] ) ) {
-						$this->fix_wpo_field_names( $_field['fields'], $parent . $_field['id'] );
-					}
-				}
+				$this->fix_wpo_field_names( $fields['fields'], $this->wpo_get_field_name( $fields, $parent ) );
 			} elseif ( ! isset( $fields['id'] ) && is_array( $fields ) ) {
 				foreach ( $fields as $id => $_field ) {
 					$this->fix_wpo_field_names( $_field, $parent );
