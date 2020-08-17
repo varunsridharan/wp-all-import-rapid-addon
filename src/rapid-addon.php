@@ -345,6 +345,10 @@ if (!class_exists('RapidAddon')) {
 
 								$image_url_or_path = $parsedData[$field_slug][$index];
 
+								if ( ! array_key_exists( $field_slug, $import_options['download_image'] ) ) {
+									continue 2;
+								}
+
 								$download = $import_options['download_image'][$field_slug];
 
 								$uploaded_image = PMXI_API::upload_image($post_id, $image_url_or_path, $download, $importData['logger'], true, "", "images", true, $importData['articleData']);
@@ -360,6 +364,10 @@ if (!class_exists('RapidAddon')) {
 							case 'file':
 
 								$image_url_or_path = $parsedData[$field_slug][$index];
+
+								if ( ! array_key_exists( $field_slug, $import_options['download_image'] ) ) {
+									continue 2;
+								}
 
 								$download = $import_options['download_image'][$field_slug];
 
@@ -660,7 +668,7 @@ if (!class_exists('RapidAddon')) {
 						)
 					);
 
-					if ( array_key_exists( 'download_image', $current_values[$this->slug] ) ) {
+					if ( array_key_exists( 'download_image', $current_values[$this->slug] ) && array_key_exists( $sub_field['slug'], $current_values[$this->slug]['download_image'] ) ) {
 						$field['params']['download_image'] = $current_values[$this->slug]['download_image'][$sub_field['slug']];
 					}
                     break;
@@ -679,7 +687,7 @@ if (!class_exists('RapidAddon')) {
 						)
 					);
 
-					if ( array_key_exists( 'download_image', $current_values[$this->slug] ) ) {
+					if ( array_key_exists( 'download_image', $current_values[$this->slug] )  && array_key_exists( $sub_field['slug'], $current_values[$this->slug]['download_image'] ) ) {
 						$field['params']['download_image'] = $current_values[$this->slug]['download_image'][$sub_field['slug']];
 					}
 
@@ -883,8 +891,8 @@ if (!class_exists('RapidAddon')) {
 		* simply add an additional section for attachments
 		*
 		*/
-		function import_files( $slug, $title ){
-			$this->import_images( $slug, $title, 'files');
+		function import_files( $slug, $title, $callback = NULL ){
+			$this->import_images( $slug, $title, 'files', $callback);
 		}
 
 		/**
@@ -892,7 +900,7 @@ if (!class_exists('RapidAddon')) {
 		* simply add an additional section 
 		*
 		*/
-		function import_images( $slug, $title, $type = 'images' ){
+		function import_images( $slug, $title, $type = 'images', $callback = NULL ){
 			
 			if ( empty($title) or empty($slug) ) return;
 
@@ -917,9 +925,13 @@ if (!class_exists('RapidAddon')) {
 			}
 
 			add_filter('wp_all_import_is_allow_import_images', array($this, 'is_allow_import_images'), 10, 2);			
-			
-			if (is_callable($slug)) {
-                add_action( $section_slug, $slug, 10, 4);
+
+			if ($callback && is_callable($callback)) {
+                add_action( $section_slug, $callback, 10, 4);
+            } else {
+                if (function_exists($slug)) {
+                    add_action( $section_slug, $slug, 10, 4);
+                }
             }
 		}			
 			/**
